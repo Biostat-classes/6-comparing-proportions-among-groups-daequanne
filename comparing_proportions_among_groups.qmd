@@ -1,6 +1,6 @@
 ---
 title: "Compare proportions among groups"
-author: "JSG"
+author: "Solomon Kim"
 format:
   html:
     embed-resources: true
@@ -254,14 +254,36 @@ We want to again test if heart attacks occur equally across genders.
 
 -   What if we know that males actually make up 50.8% of the population?
 
+```{r}
+sex_counts <- table(heart_attacks$SEX)
+chisq.test(sex_counts, p = c(0.492, 0.508))
+```
+
+Heart attacks are not evenly distributed across genders based on the population split. The result was significant, so we reject the null hypothesis. Males are overrepresented.
+
 #### 2
 
 Still using the heart attack data, is survival independent of gender?
+
+```{r}
+survival_gender <- table(heart_attacks$SEX, heart_attacks$DIED)
+chisq.test(survival_gender)
+```
+
+Survival is not independent of gender. The test was significant, so gender appears to affect survival after a heart attack.
 
 #### 3
 
 For people that have a heart attack before they turn 30, is survival
 independent of gender?
+
+```{r}
+under30 <- subset(heart_attacks, AGE < 30)
+under30_tab <- table(under30$SEX, under30$DIED)
+fisher.test(under30_tab)
+```
+
+For people under 30, survival appears to be independent of gender. The result was not significant, but the sample size is very small.
 
 ### Dolphins
 
@@ -281,6 +303,28 @@ Is travelling independent of time of day? You’ll need to consider
 traveling vs not traveling due to different number of groups observed in
 each period. Carry out post-hoc tests if needed.
 
+```{r}
+dolphins <- matrix(c(
+  6, 66,
+  6,  9,
+  14, 9,
+  13, 66
+), nrow = 4, byrow = TRUE)
+
+rownames(dolphins) <- c("Morning", "Noon", "Afternoon", "Night")
+colnames(dolphins) <- c("Traveling", "NotTraveling")
+
+chisq.test(dolphins)
+
+pairwise.prop.test(
+  x = c(6, 6, 14, 13),
+  n = c(72, 15, 23, 79),
+  p.adjust.method = "holm"
+)
+```
+
+Traveling is not independent of time of day. Dolphins travel more at certain times (especially afternoon) and less at others (like morning). Post-hoc tests confirm these differences.
+
 ### Smoking
 
 #### 5
@@ -291,3 +335,19 @@ http://www.r-tutor.com/elementary-statistics/goodness-fit/chi-squared-test-indep
 
 to determine if smoking is independent of exercise. You’ll need to input
 data manually. Carry out post-hoc tests if needed.
+
+```{r}
+smoking_exercise <- matrix(c(
+  7,  1,  3,
+  87, 18, 84,
+  12,  3,  4,
+  9,  1,  7
+), nrow = 4, byrow = TRUE)
+
+rownames(smoking_exercise) <- c("Heavy", "Never", "Occas", "Regul")
+colnames(smoking_exercise) <- c("Freq", "None", "Some")
+
+chisq.test(smoking_exercise)
+```
+
+Smoking appears to be independent of exercise. The result was not significant, so there’s no clear relationship between the two.
