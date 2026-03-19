@@ -1,6 +1,6 @@
 ---
 title: "Compare proportions among groups"
-author: "JSG"
+author: "Solomon Kim"
 format:
   html:
     embed-resources: true
@@ -254,14 +254,20 @@ We want to again test if heart attacks occur equally across genders.
 
 -   What if we know that males actually make up 50.8% of the population?
 
+Heart attacks are not evenly distributed across genders based on the population split. The result was significant, so we reject the null hypothesis. Males are overrepresented.
+
 #### 2
 
 Still using the heart attack data, is survival independent of gender?
+
+Survival is not independent of gender. The test was significant, so gender appears to affect survival after a heart attack.
 
 #### 3
 
 For people that have a heart attack before they turn 30, is survival
 independent of gender?
+
+For people under 30, survival appears to be independent of gender. The result was not significant, but the sample size is very small.
 
 ### Dolphins
 
@@ -281,6 +287,8 @@ Is travelling independent of time of day? You’ll need to consider
 traveling vs not traveling due to different number of groups observed in
 each period. Carry out post-hoc tests if needed.
 
+Traveling is not independent of time of day. Dolphins travel more at certain times (especially afternoon) and less at others (like morning). Post-hoc tests confirm these differences.
+
 ### Smoking
 
 #### 5
@@ -291,3 +299,5 @@ http://www.r-tutor.com/elementary-statistics/goodness-fit/chi-squared-test-indep
 
 to determine if smoking is independent of exercise. You’ll need to input
 data manually. Carry out post-hoc tests if needed.
+
+Smoking appears to be independent of exercise. The result was not significant, so there’s no clear relationship between the two.
